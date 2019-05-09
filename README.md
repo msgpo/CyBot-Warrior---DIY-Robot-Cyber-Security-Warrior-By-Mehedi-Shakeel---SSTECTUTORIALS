@@ -1,7 +1,7 @@
 # CyBot-Warrior---DIY-Robot-Cyber-Security-Warrior-By-Mehedi-Shakeel---SSTECTUTORIALS
 CyBot Warrior - DIY Robot Cyber Security Warrior By Mehedi Shakeel - SSTECTUTORIALS
 
-![](Cybotpic/Cyboy1.png)
+![Cybot1](https://user-images.githubusercontent.com/26013128/57453014-13cf1280-7287-11e9-82b9-f4b1eee525ec.PNG)
 
 CyBot Robot Car is a Arduino Based Bluetooth Controlled Car Which can jam every wifi connection near 10 meter also it will have a lots of features regarding cyber security and hacking.
 
