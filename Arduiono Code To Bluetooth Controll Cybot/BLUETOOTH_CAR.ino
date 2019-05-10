@@ -1,7 +1,7 @@
 // This is only for bluetooth controll car using arduino                                                     //Arduino Bluetooth Controlled Car//
 //// Before uploading the code you have to install the necessary library//
 //AFMotor Library https://learn.adafruit.com/adafruit-motor-shield/library-install //
-
+// Bluetooth Controlled
 #include <AFMotor.h>
 
 //initial motors pin
