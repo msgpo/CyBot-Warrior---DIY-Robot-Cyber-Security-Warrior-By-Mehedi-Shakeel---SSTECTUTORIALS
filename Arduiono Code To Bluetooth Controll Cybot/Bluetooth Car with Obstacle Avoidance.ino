@@ -59,6 +59,74 @@ void loop() {
       case 'R':
         right();
         break;
+	  default:
+	  int distanceR = 0;
+        int distanceL =  0;
+        delay(40);
+
+        if (distance <= 15)
+        {
+          omoveStop();
+          delay(100);
+          omoveBackward();
+          delay(300);
+          omoveStop();
+          delay(200);
+          distanceR = olookRight();
+          delay(200);
+          distanceL = olookLeft();
+          delay(200);
+
+          if (distanceR >= distanceL)
+          {
+            oturnRight();
+            omoveStop();
+          } else
+          {
+            oturnLeft();
+            omoveStop();
+          }
+        } else
+        {
+          omoveForward();
+        }
+        distance = oreadPing();
+
+        int distanceR = 0;
+        int distanceL =  0;
+        delay(40);
+
+        if (distance <= 15)
+        {
+          omoveStop();
+          delay(100);
+          omoveBackward();
+          delay(300);
+          omoveStop();
+          delay(200);
+          distanceR = olookRight();
+          delay(200);
+          distanceL = olookLeft();
+          delay(200);
+
+          if (distanceR >= distanceL)
+          {
+            oturnRight();
+            omoveStop();
+          } else
+          {
+            oturnLeft();
+            omoveStop();
+          }
+        } else
+        {
+          omoveForward();
+        }
+        distance = oreadPing();
+
+
+    }
+  }
         
 }
 
