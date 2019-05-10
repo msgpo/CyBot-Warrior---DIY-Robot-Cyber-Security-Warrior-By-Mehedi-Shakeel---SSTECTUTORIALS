@@ -123,3 +123,104 @@ void Stop()
   motor4.setSpeed(0); //Define minimum velocity
   motor4.run(RELEASE); //stop the motor when release the button
 }
+
+
+
+
+int olookRight()
+{
+    myservo.write(50); 
+    delay(500);
+    int distance = readPing();
+    delay(100);
+    myservo.write(115); 
+    return distance;
+}
+
+int olookLeft()
+{
+    myservo.write(170); 
+    delay(500);
+    int distance = readPing();
+    delay(100);
+    myservo.write(115); 
+    return distance;
+    delay(100);
+}
+
+int oreadPing() { 
+  delay(70);
+  int cm = sonar.ping_cm();
+  if(cm==0)
+  {
+    cm = 250;
+  }
+  return cm;
+}
+
+void omoveStop() {
+  motor1.run(RELEASE); 
+  motor2.run(RELEASE);
+  motor3.run(RELEASE);
+  motor4.run(RELEASE);
+  } 
+  
+void omoveForward() {
+
+ if(!goesForward)
+  {
+    goesForward=true;
+    motor1.run(FORWARD);      
+    motor2.run(FORWARD);
+    motor3.run(FORWARD); 
+    motor4.run(FORWARD);     
+   for (speedSet = 0; speedSet < MAX_SPEED; speedSet +=2) // slowly bring the speed up to avoid loading down the batteries too quickly
+   {
+    motor1.setSpeed(speedSet);
+    motor2.setSpeed(speedSet);
+    motor3.setSpeed(speedSet);
+    motor4.setSpeed(speedSet);
+    delay(5);
+   }
+  }
+}
+
+void omoveBackward() {
+    goesForward=false;
+    motor1.run(BACKWARD);      
+    motor2.run(BACKWARD);
+    motor3.run(BACKWARD);
+    motor4.run(BACKWARD);  
+  for (speedSet = 0; speedSet < MAX_SPEED; speedSet +=2) // slowly bring the speed up to avoid loading down the batteries too quickly
+  {
+    motor1.setSpeed(speedSet);
+    motor2.setSpeed(speedSet);
+    motor3.setSpeed(speedSet);
+    motor4.setSpeed(speedSet);
+    delay(5);
+  }
+}  
+
+void oturnRight() {
+  motor1.run(FORWARD);
+  motor2.run(FORWARD);
+  motor3.run(BACKWARD);
+  motor4.run(BACKWARD);     
+  delay(500);
+  motor1.run(FORWARD);      
+  motor2.run(FORWARD);
+  motor3.run(FORWARD);
+  motor4.run(FORWARD);      
+} 
+ 
+void oturnLeft() {
+  motor1.run(BACKWARD);     
+  motor2.run(BACKWARD);  
+  motor3.run(FORWARD);
+  motor4.run(FORWARD);   
+  delay(500);
+  motor1.run(FORWARD);     
+  motor2.run(FORWARD);
+  motor3.run(FORWARD);
+  motor4.run(FORWARD);
+}
