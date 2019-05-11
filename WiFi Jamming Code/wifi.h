@@ -62,7 +62,6 @@ IPAddress apIP(192, 168, 4, 1);
 IPAddress netMsk(255, 255, 255, 0);
 File fsUploadFile;
 
-
 // current WiFi mode and config
 uint8_t wifiMode = WIFI_MODE_OFF;
 
