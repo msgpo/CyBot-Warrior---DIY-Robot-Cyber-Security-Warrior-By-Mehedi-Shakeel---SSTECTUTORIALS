@@ -32,6 +32,8 @@ Equipment i use till now :
 
 7) LoLin V3 NodeMcu  WIFI Board:  https://ban.ggood.vip/ci8j
 
+8) Ultrasonic S-04 Senseor 
+
 More Updates and Features Coming Soon !!!
 
 If you have any questions & inquiries Contact :
