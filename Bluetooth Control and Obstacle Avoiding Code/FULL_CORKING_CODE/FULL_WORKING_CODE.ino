@@ -48,8 +48,11 @@ void setup()
 void loop() {
 
   int a = Serial.available();
+ 
+  
   if ( a > 0) {
     command = Serial.read();
+    Serial.println(command);
     Stop(); //initialize with motors stoped
     //Change pin mode only if new command is different from previous.
     //Serial.println(command);
@@ -66,11 +69,52 @@ void loop() {
       case 'R':
         right();
         break;
+      case 'S':
+        moveStop();
+        break;
+      case 'D':
+        
+        a = 0;
+        int distanceR = 0;
+        int distanceL =  0;
+        delay(40);
+        distance = readPing();
+        
+        if (distance)
+        {
+          moveStop();
+          delay(100);
+          moveBackward();
+          delay(300);
+          moveStop();
+          delay(200);
+          distanceR = lookRight();
+          delay(200);
+          distanceL = lookLeft();
+          delay(200);
+
+          if (distanceR >= distanceL)
+          {
+            turnRight();
+            moveStop();
+          } else
+          {
+            turnLeft();
+            moveStop();
+          }
+          moveForward();
+        } 
+        else
+        {
+          moveForward();
+        }
+        distance = readPing();
+        break;
     }
   }
 
   else {
-
+    
     int distanceR = 0;
     int distanceL =  0;
     delay(40);
