@@ -15,13 +15,9 @@ AF_DCMotor motor1(1);
 AF_DCMotor motor2(2);
 AF_DCMotor motor3(3);
 AF_DCMotor motor4(4);
-
-
-
-boolean goesForward = false;
+Servo myservo; 
+  
 int distance = 100;
-int speedSet = 255;
-
 char command;
 
 void setup()
@@ -53,7 +49,7 @@ void loop() {
         right();
         break;
       case 'S':
-        moveStop();
+        Stop();
         break;
       case 'D':
 
@@ -65,25 +61,25 @@ void loop() {
 
         if (distance)
         {
-          moveStop();
+          Stop();
           delay(100);
-          moveBackward();
+          back();
           delay(300);
-          moveStop();
+          Stop();
           if (distanceR >= distanceL)
           {
-            turnRight();
-            moveStop();
+            right();
+            Stop();
           } else
           {
-            turnLeft();
-            moveStop();
+            left();
+            Stop();
           }
-          moveForward();
+          forward();
         }
         else
         {
-          moveForward();
+          forward();
         }
         distance = readPing();
         break;
@@ -96,110 +92,71 @@ void loop() {
     int distanceL =  0;
     delay(40);
 
-    if (distance <= 20)
+    if (distance <= 15)
     {
-      moveStop();
+      Stop();
       delay(100);
-      moveBackward();
+      back();
       delay(300);
-      moveStop();
+      Stop();
       delay(200);
-      turnRight();
-      moveStop();
+      distanceR = lookRight();
+      delay(200);
+      distanceL = lookLeft();
+      delay(200);
 
       if (distanceR >= distanceL)
       {
-        turnLeft();
-        moveStop();
+        right();
+        Stop();
+      } else
+      {
+        left();
+        Stop();
       }
     } else
     {
-      moveForward();
+      forward();
     }
     distance = readPing();
-
-
-
   }
   a = 0;
 }
-int readPing() {
+
+
+
+int lookRight()  //serovo turn right
+{
+    myservo.write(50); 
+    delay(500);
+    int distance = readPing();
+    delay(100);
+    myservo.write(115); 
+    return distance;
+}
+
+int lookLeft()  //servo turn left
+{
+    myservo.write(170); 
+    delay(500);
+    int distance = readPing();
+    delay(100);
+    myservo.write(115); 
+    return distance;
+    delay(100);
+}
+
+int readPing()  // Read Obstacle Distance
+{ 
   delay(70);
   int cm = sonar.ping_cm();
-  if (cm == 0)
+  if(cm==0)
   {
     cm = 250;
   }
   return cm;
 }
-
-void moveStop() {
-  motor1.run(RELEASE);
-  motor2.run(RELEASE);
-  motor3.run(RELEASE);
-  motor4.run(RELEASE);
-}
-
-void moveForward() {
-
-  if (!goesForward)
-  {
-    goesForward = true;
-    motor1.run(FORWARD);
-    motor2.run(FORWARD);
-    motor3.run(FORWARD);
-    motor4.run(FORWARD);
-    for (speedSet = 0; speedSet < MAX_SPEED; speedSet += 2) // slowly bring the speed up to avoid loading down the batteries too quickly
-    {
-      motor1.setSpeed(speedSet);
-      motor2.setSpeed(speedSet);
-      motor3.setSpeed(speedSet);
-      motor4.setSpeed(speedSet);
-      delay(5);
-    }
-  }
-}
-
-void moveBackward() {
-  goesForward = false;
-  motor1.run(BACKWARD);
-  motor2.run(BACKWARD);
-  motor3.run(BACKWARD);
-  motor4.run(BACKWARD);
-  for (speedSet = 0; speedSet < MAX_SPEED; speedSet += 2) // slowly bring the speed up to avoid loading down the batteries too quickly
-  {
-    motor1.setSpeed(speedSet);
-    motor2.setSpeed(speedSet);
-    motor3.setSpeed(speedSet);
-    motor4.setSpeed(speedSet);
-    delay(5);
-  }
-}
-
-void turnRight() {
-  motor1.run(FORWARD);
-  motor2.run(FORWARD);
-  motor3.run(BACKWARD);
-  motor4.run(BACKWARD);
-  delay(500);
-  motor1.run(FORWARD);
-  motor2.run(FORWARD);
-  motor3.run(FORWARD);
-  motor4.run(FORWARD);
-}
-
-void turnLeft() {
-  motor1.run(BACKWARD);
-  motor2.run(BACKWARD);
-  motor3.run(FORWARD);
-  motor4.run(FORWARD);
-  delay(500);
-  motor1.run(FORWARD);
-  motor2.run(FORWARD);
-  motor3.run(FORWARD);
-  motor4.run(FORWARD);
-}
-void forward()
+void forward()  // Go Forward
 {
   motor1.setSpeed(255); //Define maximum velocity
   motor1.run(FORWARD); //rotate the motor clockwise
@@ -211,7 +168,7 @@ void forward()
   motor4.run(FORWARD); //rotate the motor clockwise
 }
 
-void back()
+void back() // Go Back
 {
   motor1.setSpeed(255); //Define maximum velocity
   motor1.run(BACKWARD); //rotate the motor anti-clockwise
@@ -223,7 +180,7 @@ void back()
   motor4.run(BACKWARD); //rotate the motor anti-clockwise
 }
 
-void left()
+void left() // Go Left
 {
   motor1.setSpeed(255); //Define maximum velocity
   motor1.run(BACKWARD); //rotate the motor anti-clockwise
@@ -235,7 +192,7 @@ void left()
   motor4.run(FORWARD);  //rotate the motor clockwise
 }
 
-void right()
+void right() // Go Right
 {
   motor1.setSpeed(255); //Define maximum velocity
   motor1.run(FORWARD); //rotate the motor clockwise
@@ -247,7 +204,7 @@ void right()
   motor4.run(BACKWARD); //rotate the motor anti-clockwise
 }
 
-void Stop()
+void Stop() // Car Stop
 {
   motor1.setSpeed(0); //Define minimum velocity
   motor1.run(RELEASE); //stop the motor when release the button
